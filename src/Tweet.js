@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 
 class Tweet extends Component {
-  deleteTweet(e){
-    console.log(e.target.getAttribute('data-tweet'));
-    let tweet = e.target.getAttribute('data-tweet');
 
-    fetch(`https://still-garden-88285.herokuapp.com/draft_tweets`, {
-    method: 'DELETE',
-    })
-    .then(this.setState({idLoading: true}))
-    .then(setTimeout(this.componentDidMount.bind(this), 500));
+removeCategory (obj) {
+  fetch (`https://still-garden-88285.herokuapp.com/draft_tweets/${obj}`, {
+    method: 'DELETE'
+  })
+  .then(res => res.json())
+  ;
+}
 
-  }
   render() {
     const { user_name, avatar, description, created_at } = this.props.obj;
     
@@ -29,7 +27,7 @@ class Tweet extends Component {
           <div className="row">
             <p className="user-name">{user_name}</p>
             <span className="timestamp">{created_at}</span>
-            <a class="dropdown-item text-danger" onClick={(e) => this.deleteTweet(e)} data-tweet={tweet.id}>Elimiar</a>
+            <button onClick={this.removeCategory.bind(this, const.obj)}>Eliminar</button>
           </div>
           <div className="tweet-info">{description}</div>
         </div>
